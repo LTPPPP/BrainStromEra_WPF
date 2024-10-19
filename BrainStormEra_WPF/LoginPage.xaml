@@ -1,0 +1,100 @@
+﻿<Window x:Class="BrainStormEra_WPF.LoginPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Login Page" 
+        WindowState="Maximized"
+        ResizeMode="CanResizeWithGrip" 
+        WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF4A90E2" Offset="0.0"/>
+            <GradientStop Color="#FF50E3C2" Offset="1.0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <Button Content="← Return" Width="100" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20" 
+                FontSize="14" Background="#FF50E3C2" Foreground="White" BorderBrush="Transparent" Cursor="Hand" 
+                Click="ReturnButton_Click"/>
+        
+        <!-- Title Block -->
+        <TextBlock Grid.Row="0" Grid.Column="1"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   FontSize="28" FontWeight="Bold" Foreground="White" 
+                   Text="BrainStormEra" Opacity="0.9"/>
+
+        <!-- Input and Button StackPanel -->
+        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+
+            <!-- Username Label and TextBox -->
+            <Label Content="Username:" Foreground="White" FontSize="16" FontWeight="Bold"/>
+            <TextBox Name="UsernameTextBox" Width="Auto" Height="auto" FontSize="14" Margin="0,0,0,20" 
+                     Padding="10" Background="White" BorderBrush="#FF50E3C2" BorderThickness="2"/>
+
+            <!-- Password Label and PasswordBox -->
+            <Label Content="Password:" Foreground="White" FontSize="16" FontWeight="Bold"/>
+            <PasswordBox Name="PasswordBox" Width="Auto" Height="auto" FontSize="14" Margin="0,0,0,20" 
+                         Padding="10" Background="White" BorderBrush="#FF50E3C2" BorderThickness="2" />
+
+            <!-- Error Message TextBlock -->
+            <TextBlock Name="ErrorMessageTextBlock" Foreground="Red" FontSize="14" Margin="0,10,0,0" 
+                       Visibility="Collapsed" HorizontalAlignment="Center"/>
+
+            <!-- Buttons (Login and Cancel) -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <Button Content="Login" Width="120" Height="40" Margin="10" FontSize="16" 
+                        Background="#FF50E3C2" Foreground="White" BorderBrush="#FF4A90E2" BorderThickness="2"
+                        Cursor="Hand" Opacity="0.9" Click="LoginButton_Click">
+                    <Button.Style>
+                        <!-- Hover Effect on Button -->
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#FF50E3C2" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FF4A90E2" />
+                                    <Setter Property="Opacity" Value="1"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Content="Cancel" Width="120" Height="40" Margin="10" FontSize="16" 
+                        Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="2" 
+                        Cursor="Hand" Opacity="0.7" Click="CancelButton_Click">
+                    <Button.Style>
+                        <!-- Hover Effect on Button -->
+                        <Style TargetType="Button">
+                            <Setter Property="Opacity" Value="0.7" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="#FF50E3C2" />
+                                    <Setter Property="BorderBrush" Value="#FF50E3C2" />
+                                    <Setter Property="Opacity" Value="1"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Footer (Optional) -->
+        <TextBlock Grid.Row="2" Grid.Column="1" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   FontSize="12" Foreground="White" Opacity="0.7" Text="© BrainStormEra" />
+    </Grid>
+</Window>

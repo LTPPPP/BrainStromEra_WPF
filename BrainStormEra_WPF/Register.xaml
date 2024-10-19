@@ -1,0 +1,88 @@
+﻿<Window x:Class="BrainStormEra_WPF.Register"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Register" WindowState="Maximized"
+        ResizeMode="CanResizeWithGrip" 
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Input elements -->
+
+        <Button Content="← Return" Width="100" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" 
+        FontSize="14" Background="#FF50E3C2" Foreground="White" BorderBrush="Transparent" Cursor="Hand" 
+        Click="ReturnButton_Click" Grid.Column="1" Grid.Row="11"/>
+
+        <TextBlock Text="Username:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" FontSize="18"/>
+        <TextBox x:Name="UsernameTextBox" Grid.Row="0" Grid.Column="1" Margin="5,10" FontSize="18" Width="200" HorizontalAlignment="Left"/>
+        <TextBlock x:Name="UsernameErrorTextBlock" Grid.Row="0" Grid.Column="2" Foreground="Red" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
+
+        <TextBlock Text="Email:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" FontSize="18"/>
+        <TextBox x:Name="EmailTextBox" Grid.Row="1" Grid.Column="1" Margin="5,10" FontSize="18" Width="200" HorizontalAlignment="Left"/>
+        <TextBlock x:Name="EmailErrorTextBlock" Grid.Row="1" Grid.Column="2" Foreground="Red" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
+
+        <TextBlock Text="Password:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" FontSize="18"/>
+        <PasswordBox x:Name="PasswordBox" Grid.Row="2" Grid.Column="1" Margin="5,10" FontSize="18" Width="200" HorizontalAlignment="Left"/>
+        <TextBlock x:Name="PasswordErrorTextBlock" Grid.Row="2" Grid.Column="2" Foreground="Red" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
+
+        <TextBlock Text="Full Name:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" FontSize="18"/>
+        <TextBox x:Name="FullNameTextBox" Grid.Row="3" Grid.Column="1" Margin="5,10" FontSize="18" Width="200" HorizontalAlignment="Left"/>
+        <TextBlock x:Name="FullNameErrorTextBlock" Grid.Row="3" Grid.Column="2" Foreground="Red" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
+
+        <TextBlock Text="Date of Birth:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" FontSize="18"/>
+        <DatePicker x:Name="DateOfBirthPicker" Grid.Row="4" Grid.Column="1" Margin="5,10" FontSize="18" Width="200" HorizontalAlignment="Left"/>
+        <TextBlock x:Name="DateOfBirthErrorTextBlock" Grid.Row="4" Grid.Column="2" Foreground="Red" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
+
+        <TextBlock Text="Gender:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" FontSize="18"/>
+        <ComboBox x:Name="GenderComboBox" Grid.Row="5" Grid.Column="1" Margin="5,10" FontSize="18" Width="200" HorizontalAlignment="Left">
+            <ComboBoxItem Content="Male" FontSize="18"/>
+            <ComboBoxItem Content="Female" FontSize="18"/>
+            <ComboBoxItem Content="Other" FontSize="18"/>
+        </ComboBox>
+        <TextBlock x:Name="GenderErrorTextBlock" Grid.Row="5" Grid.Column="2" Foreground="Red" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
+
+        <TextBlock Text="Phone Number:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" FontSize="18"/>
+        <TextBox x:Name="PhoneNumberTextBox" Grid.Row="6" Grid.Column="1" Margin="5,10" FontSize="18" Width="200" HorizontalAlignment="Left"/>
+        <TextBlock x:Name="PhoneNumberErrorTextBlock" Grid.Row="6" Grid.Column="2" Foreground="Red" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
+
+        <TextBlock Text="Address:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" FontSize="18"/>
+        <TextBox x:Name="AddressTextBox" Grid.Row="7" Grid.Column="1" Margin="5,10" FontSize="18" Width="200" HorizontalAlignment="Left"/>
+        <TextBlock x:Name="AddressErrorTextBlock" Grid.Row="7" Grid.Column="2" Foreground="Red" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
+
+        <TextBlock Text="Role:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" FontSize="18"/>
+        <ComboBox x:Name="RoleComboBox" Grid.Row="8" Grid.Column="1" Margin="5,10" FontSize="18" Width="200" HorizontalAlignment="Left">
+            <ComboBoxItem Content="Student" FontSize="18"/>
+            <ComboBoxItem Content="Instructor" FontSize="18"/>
+        </ComboBox>
+
+        <TextBlock Text="Profile Picture:" Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" FontSize="18"/>
+        <Button Content="Upload" Grid.Row="9" Grid.Column="1" Margin="5,10" FontSize="18" Width="200" HorizontalAlignment="Left" Click="UploadButton_Click"/>
+
+        <!-- Image control để hiển thị ảnh đã tải lên -->
+        <Image x:Name="ProfilePictureImage" Grid.Row="9" Grid.Column="2" Margin="5,10" Width="100" Height="100" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+        <!-- Register button -->
+        <Button Content="Register" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="1" Margin="10" Height="30" HorizontalAlignment="Center" Width="100" FontSize="18" Click="RegisterButton_Click"/>
+    </Grid>
+</Window>
