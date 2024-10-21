@@ -1,0 +1,132 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4B616B00-4A0F-44BE-B282-EC0DB64B712D}|BrainStormEra_WPF\\BrainStormEra_WPF.csproj|e:\\cn\\fa24_k5\\prn212\\fp\\brainstormera\\brainstormera_wpf\\brainstormera_wpf\\homepageadmin.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4B616B00-4A0F-44BE-B282-EC0DB64B712D}|BrainStormEra_WPF\\BrainStormEra_WPF.csproj|solutionrelative:brainstormera_wpf\\homepageadmin.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B616B00-4A0F-44BE-B282-EC0DB64B712D}|BrainStormEra_WPF\\BrainStormEra_WPF.csproj|e:\\cn\\fa24_k5\\prn212\\fp\\brainstormera\\brainstormera_wpf\\brainstormera_wpf\\homepageguest.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4B616B00-4A0F-44BE-B282-EC0DB64B712D}|BrainStormEra_WPF\\BrainStormEra_WPF.csproj|solutionrelative:brainstormera_wpf\\homepageguest.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B616B00-4A0F-44BE-B282-EC0DB64B712D}|BrainStormEra_WPF\\BrainStormEra_WPF.csproj|e:\\cn\\fa24_k5\\prn212\\fp\\brainstormera\\brainstormera_wpf\\brainstormera_wpf\\homepageinstructor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4B616B00-4A0F-44BE-B282-EC0DB64B712D}|BrainStormEra_WPF\\BrainStormEra_WPF.csproj|solutionrelative:brainstormera_wpf\\homepageinstructor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B616B00-4A0F-44BE-B282-EC0DB64B712D}|BrainStormEra_WPF\\BrainStormEra_WPF.csproj|e:\\cn\\fa24_k5\\prn212\\fp\\brainstormera\\brainstormera_wpf\\brainstormera_wpf\\homepagelearner.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4B616B00-4A0F-44BE-B282-EC0DB64B712D}|BrainStormEra_WPF\\BrainStormEra_WPF.csproj|solutionrelative:brainstormera_wpf\\homepagelearner.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B616B00-4A0F-44BE-B282-EC0DB64B712D}|BrainStormEra_WPF\\BrainStormEra_WPF.csproj|e:\\cn\\fa24_k5\\prn212\\fp\\brainstormera\\brainstormera_wpf\\brainstormera_wpf\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4B616B00-4A0F-44BE-B282-EC0DB64B712D}|BrainStormEra_WPF\\BrainStormEra_WPF.csproj|solutionrelative:brainstormera_wpf\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B616B00-4A0F-44BE-B282-EC0DB64B712D}|BrainStormEra_WPF\\BrainStormEra_WPF.csproj|e:\\cn\\fa24_k5\\prn212\\fp\\brainstormera\\brainstormera_wpf\\brainstormera_wpf\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4B616B00-4A0F-44BE-B282-EC0DB64B712D}|BrainStormEra_WPF\\BrainStormEra_WPF.csproj|solutionrelative:brainstormera_wpf\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 314,
+          "SelectedChildIndex": 9,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\BrainStormEra_WPF\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "BrainStormEra_WPF\\MainWindow.xaml",
+              "ToolTip": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\BrainStormEra_WPF\\MainWindow.xaml",
+              "RelativeToolTip": "BrainStormEra_WPF\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-10-21T04:45:17.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LoginPage.xaml",
+              "DocumentMoniker": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\BrainStormEra_WPF\\LoginPage.xaml",
+              "RelativeDocumentMoniker": "BrainStormEra_WPF\\LoginPage.xaml",
+              "ToolTip": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\BrainStormEra_WPF\\LoginPage.xaml",
+              "RelativeToolTip": "BrainStormEra_WPF\\LoginPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-10-21T04:45:14.132Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HomePageInstructor.xaml",
+              "DocumentMoniker": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\BrainStormEra_WPF\\HomePageInstructor.xaml",
+              "RelativeDocumentMoniker": "BrainStormEra_WPF\\HomePageInstructor.xaml",
+              "ToolTip": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\BrainStormEra_WPF\\HomePageInstructor.xaml",
+              "RelativeToolTip": "BrainStormEra_WPF\\HomePageInstructor.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-10-21T04:45:12.773Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HomePageLearner.xaml",
+              "DocumentMoniker": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\BrainStormEra_WPF\\HomePageLearner.xaml",
+              "RelativeDocumentMoniker": "BrainStormEra_WPF\\HomePageLearner.xaml",
+              "ToolTip": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\BrainStormEra_WPF\\HomePageLearner.xaml",
+              "RelativeToolTip": "BrainStormEra_WPF\\HomePageLearner.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-10-21T04:45:12.115Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HomePageGuest.xaml",
+              "DocumentMoniker": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\BrainStormEra_WPF\\HomePageGuest.xaml",
+              "RelativeDocumentMoniker": "BrainStormEra_WPF\\HomePageGuest.xaml",
+              "ToolTip": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\BrainStormEra_WPF\\HomePageGuest.xaml",
+              "RelativeToolTip": "BrainStormEra_WPF\\HomePageGuest.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-10-21T04:45:10.234Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HomePageAdmin.xaml",
+              "DocumentMoniker": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\BrainStormEra_WPF\\HomePageAdmin.xaml",
+              "RelativeDocumentMoniker": "BrainStormEra_WPF\\HomePageAdmin.xaml",
+              "ToolTip": "E:\\CN\\FA24_K5\\PRN212\\FP\\BrainStormEra\\BrainStormEra_WPF\\BrainStormEra_WPF\\HomePageAdmin.xaml",
+              "RelativeToolTip": "BrainStormEra_WPF\\HomePageAdmin.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-10-21T04:45:08.22Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
