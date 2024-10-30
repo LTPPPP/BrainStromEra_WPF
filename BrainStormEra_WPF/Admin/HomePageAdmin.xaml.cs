@@ -2,6 +2,8 @@
 using System;
 using System.Windows;
 using BrainStormEra_WPF.Models;
+using System.Windows.Input;
+using System.Windows.Navigation;
 namespace BrainStormEra_WPF
 {
     /// <summary>
@@ -30,5 +32,11 @@ namespace BrainStormEra_WPF
                 this.Close();
             }
         }
+        private void UserPicture_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MainFrame.Navigate(new Profile(_accountViewModel));
+        }
+
+
     }
 }

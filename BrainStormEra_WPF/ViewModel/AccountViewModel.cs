@@ -7,8 +7,23 @@ namespace BrainStormEra_WPF.ViewModel
 {
     public class AccountViewModel : BaseViewModel
     {
+        private string _UserId;
         private string _fullName;
         private BitmapImage _userPicture;
+        private DateOnly? _dateOfBirth;
+        private string _gender;
+        private string _phoneNumber;
+        private string _userAddress;
+
+        public string UserId
+        {
+            get => _UserId;
+            set
+            {
+                _UserId = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string FullName
         {
@@ -30,9 +45,55 @@ namespace BrainStormEra_WPF.ViewModel
             }
         }
 
+        public byte[]? UserPictureBytes { get; set; }
+
+        public DateOnly? DateOfBirth
+        {
+            get => _dateOfBirth;
+            set
+            {
+                _dateOfBirth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Gender
+        {
+            get => _gender;
+            set
+            {
+                _gender = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string PhoneNumber
+        {
+            get => _phoneNumber;
+            set
+            {
+                _phoneNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string UserAddress
+        {
+            get => _userAddress;
+            set
+            {
+                _userAddress = value;
+                OnPropertyChanged();
+            }
+        }
+
         public AccountViewModel(Account account)
         {
-            FullName = account.FullName;
+            FullName = account.FullName ?? string.Empty;
+            DateOfBirth = account.DateOfBirth;
+            Gender = account.Gender ?? "Other";
+            PhoneNumber = account.PhoneNumber ?? string.Empty;
+            UserAddress = account.UserAddress ?? string.Empty;
             SetUserPicture(account.UserPicture);
         }
 
@@ -40,21 +101,19 @@ namespace BrainStormEra_WPF.ViewModel
         {
             if (pictureBytes != null && pictureBytes.Length > 0)
             {
-                using (var ms = new MemoryStream(pictureBytes))
-                {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.StreamSource = ms;
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.EndInit();
-                    UserPicture = image;
-                }
+                using var ms = new MemoryStream(pictureBytes);
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.StreamSource = ms;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.EndInit();
+                UserPicture = image;
             }
             else
             {
-                // Nếu không có hình ảnh, hiển thị hình mặc định
                 UserPicture = new BitmapImage(new Uri("pack://application:,,,/BrainStormEra_WPF;component/img/user-img/default_user.png"));
             }
+            UserPictureBytes = pictureBytes;
         }
     }
 }
