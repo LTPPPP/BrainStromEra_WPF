@@ -19,11 +19,17 @@ public partial class Course
 
     public DateTime CourseCreatedAt { get; set; }
 
+    public string? CreatedBy { get; set; }
+
     public virtual ICollection<Chapter> Chapters { get; set; } = new List<Chapter>();
 
     public virtual Status? CourseStatusNavigation { get; set; }
 
+    public virtual Account? CreatedByNavigation { get; set; }
+
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+
+    public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
     public virtual ICollection<CourseCategory> CourseCategories { get; set; } = new List<CourseCategory>();
 }

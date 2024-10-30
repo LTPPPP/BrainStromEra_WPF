@@ -76,7 +76,7 @@ namespace BrainStormEra_WPF {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/BrainStormEra_WPF;V1.0.0.0;component/common/login-register/loginpage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/BrainStormEra_WPF;component/common/login-register/loginpage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Common\Login-Register\LoginPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -7,7 +7,7 @@ public partial class Account
 {
     public string UserId { get; set; } = null!;
 
-    public int UserRole { get; set; }
+    public int? UserRole { get; set; }
 
     public string Username { get; set; } = null!;
 
@@ -15,7 +15,7 @@ public partial class Account
 
     public string Password { get; set; } = null!;
 
-    public string FullName { get; set; }
+    public string? FullName { get; set; }
 
     public DateOnly? DateOfBirth { get; set; }
 
@@ -25,11 +25,15 @@ public partial class Account
 
     public string? UserAddress { get; set; }
 
-    public string? UserPicture { get; set; }
+    public byte[]? UserPicture { get; set; }
 
     public DateTime AccountCreatedAt { get; set; }
 
+    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
+
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+
+    public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
     public virtual Role? UserRoleNavigation { get; set; }
 }

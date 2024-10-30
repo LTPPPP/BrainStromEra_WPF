@@ -10,12 +10,12 @@ namespace BrainStormEra_WPF
 {
     public partial class LoginPage : Window
     {
-        private readonly PrnDbContext _dbContext;
+        private readonly PrnDbFpContext _dbContext;
 
         public LoginPage()
         {
             InitializeComponent();
-            _dbContext = new PrnDbContext();
+            _dbContext = new PrnDbFpContext();
 
             // Gắn sự kiện khi nhấn phím Enter trên TextBox và PasswordBox
             UsernameTextBox.KeyDown += OnEnterPressed;
@@ -61,7 +61,7 @@ namespace BrainStormEra_WPF
                     switch (account.UserRole)
                     {
                         case 1: // Admin
-                            var adminPage = new HomePageAdmin();
+                            var adminPage = new HomePageAdmin(account);
                             adminPage.Show();
                             this.Close();
                             break;

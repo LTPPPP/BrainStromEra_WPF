@@ -6,20 +6,16 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using IOPath = System.IO.Path;
-
+using System.Windows.Media;
 
 namespace BrainStormEra_WPF
 {
     public partial class Register : Window
     {
-        // Biến lưu trữ đường dẫn ảnh sau khi người dùng upload ảnh
-        private string UploadedPicturePath;
+        private BitmapImage? UploadedPicture;
 
         public Register()
         {
@@ -28,37 +24,31 @@ namespace BrainStormEra_WPF
 
         private void ReturnButton_Click(object sender, RoutedEventArgs e)
         {
-            HomePageGuest homePageGuest = new HomePageGuest();
+            var homePageGuest = new HomePageGuest();
             homePageGuest.Show();
             this.Close();
         }
 
-        // Kiểm tra xem email đã được đăng ký chưa
-        public bool IsEmailRegistered(string email)
+        // Chuyển đổi hình ảnh BitmapImage thành chuỗi Base64
+        private string? ConvertImageToBase64(BitmapImage image)
         {
-            using (var context = new PrnDbContext())
+            if (image == null) return null;
+
+            using (var ms = new MemoryStream())
             {
-                return context.Accounts.Any(a => a.UserEmail == email);
+                var encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(image));
+                encoder.Save(ms);
+                byte[] imageBytes = ms.ToArray();
+                return Convert.ToBase64String(imageBytes);
             }
         }
 
-        // Kiểm tra xem số điện thoại đã được đăng ký chưa
-        public bool IsPhoneNumberRegistered(string phoneNumber)
+        public void RegisterNewUser(string username, string email, string password, string fullName, DateTime? dateOfBirth, string gender, string phoneNumber, string address, BitmapImage? picture)
         {
-            using (var context = new PrnDbContext())
-            {
-                return context.Accounts.Any(a => a.PhoneNumber == phoneNumber);
-            }
-        }
-
-        // Đăng ký người dùng mới
-        public void RegisterNewUser(string username, string email, string password, string fullName, DateTime? dateOfBirth, string gender, string phoneNumber, string address, string picturePath)
-        {
-            using (var context = new PrnDbContext())
+            using (var context = new PrnDbFpContext())
             {
                 string hashedPassword = HashPasswordMD5(password);
-
-                // Tạo UserId với tiền tố ST hoặc IN dựa trên role
                 string role = (RoleComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
                 int userRole = role == "Student" ? 3 : 2;
                 string userId = GenerateUserId(role, context);
@@ -75,7 +65,7 @@ namespace BrainStormEra_WPF
                     Gender = gender,
                     PhoneNumber = phoneNumber,
                     UserAddress = address,
-                    UserPicture = picturePath != null ? $"img/user-img/{IOPath.GetFileName(picturePath)}" : null,
+                    UserPicture = picture != null ? Convert.FromBase64String(ConvertImageToBase64(picture)) : null,
                     AccountCreatedAt = DateTime.Now
                 };
 
@@ -86,7 +76,6 @@ namespace BrainStormEra_WPF
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            // Xóa trạng thái lỗi trước khi kiểm tra lại
             ClearValidationErrors();
 
             string username = UsernameTextBox.Text;
@@ -97,199 +86,101 @@ namespace BrainStormEra_WPF
             string gender = (GenderComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
             string phoneNumber = PhoneNumberTextBox.Text;
             string address = AddressTextBox.Text;
-            string picturePath = string.IsNullOrEmpty(UploadedPicturePath) ? null : UploadedPicturePath;  // Kiểm tra nếu không có ảnh
 
-            // Biến lưu trữ thông báo lỗi
-            bool hasError = false;
+            bool hasError = ValidateInput(username, email, password, fullName, dateOfBirth, gender, phoneNumber, address);
+            if (hasError) return;
 
-            if (string.IsNullOrEmpty(username))
-            {
-                SetError(UsernameTextBox, UsernameErrorTextBlock, "Username can't be empty.");
-                hasError = true;
-            }
-
-            if (string.IsNullOrEmpty(email) || !IsEmailValid(email))
-            {
-                SetError(EmailTextBox, EmailErrorTextBlock, "Invalid Email.");
-                hasError = true;
-            }
-
-            if (string.IsNullOrEmpty(phoneNumber) || !IsPhoneNumberValid(phoneNumber))
-            {
-                SetError(PhoneNumberTextBox, PhoneNumberErrorTextBlock, "Invalid phone number.");
-                hasError = true;
-            }
-
-            if (IsEmailRegistered(email))
-            {
-                SetError(EmailTextBox, EmailErrorTextBlock, "Email has been existed.");
-                hasError = true;
-            }
-
-            if (IsPhoneNumberRegistered(phoneNumber))
-            {
-                SetError(PhoneNumberTextBox, PhoneNumberErrorTextBlock, "Phone number has been existed.");
-                hasError = true;
-            }
-
-            if (string.IsNullOrEmpty(password) || password.Length < 6)
-            {
-                SetError(PasswordBox, PasswordErrorTextBlock, "Password must be at least 6 character.");
-                hasError = true;
-            }
-
-            if (string.IsNullOrEmpty(fullName))
-            {
-                SetError(FullNameTextBox, FullNameErrorTextBlock, "Fullname can't be empty.");
-                hasError = true;
-            }
-
-            if (!dateOfBirth.HasValue)
-            {
-                SetError(DateOfBirthPicker, DateOfBirthErrorTextBlock, "Invalid date of birth.");
-                hasError = true;
-            }
-
-            if (string.IsNullOrEmpty(gender))
-            {
-                SetError(GenderComboBox, GenderErrorTextBlock, "Please select gender.");
-                hasError = true;
-            }
-
-            if (string.IsNullOrEmpty(address))
-            {
-                SetError(AddressTextBox, AddressErrorTextBlock, "Address can not be empty.");
-                hasError = true;
-            }
-
-            // Nếu có lỗi, không tiếp tục đăng ký
-            if (hasError)
-            {
-                return;
-            }
-
-            // Nếu không có lỗi, đăng ký người dùng mới
-            RegisterNewUser(username, email, password, fullName, dateOfBirth, gender, phoneNumber, address, picturePath);
-            MessageBox.Show("Register successfull!");
+            RegisterNewUser(username, email, password, fullName, dateOfBirth, gender, phoneNumber, address, UploadedPicture);
+            MessageBox.Show("Register successful!");
 
             var loginWindow = new LoginPage();
             loginWindow.Show();
             this.Close();
         }
 
-        // Hàm đặt thông báo lỗi cho các controls và TextBlock tương ứng
-        private void SetError(Control control, TextBlock errorTextBlock, string message)
+        private bool ValidateInput(string username, string email, string password, string fullName, DateTime? dateOfBirth, string gender, string phoneNumber, string address)
         {
-            control.BorderBrush = Brushes.Red;
-            control.ToolTip = message;
-            errorTextBlock.Text = message;
-            errorTextBlock.Visibility = Visibility.Visible;
+            bool hasError = false;
+
+            if (string.IsNullOrEmpty(username)) { SetError(UsernameTextBox, UsernameErrorTextBlock, "Username can't be empty."); hasError = true; }
+            if (string.IsNullOrEmpty(email) || !IsEmailValid(email)) { SetError(EmailTextBox, EmailErrorTextBlock, "Invalid Email."); hasError = true; }
+            if (string.IsNullOrEmpty(phoneNumber) || !IsPhoneNumberValid(phoneNumber)) { SetError(PhoneNumberTextBox, PhoneNumberErrorTextBlock, "Invalid phone number."); hasError = true; }
+            if (string.IsNullOrEmpty(password) || password.Length < 6) { SetError(PasswordBox, PasswordErrorTextBlock, "Password must be at least 6 characters."); hasError = true; }
+            if (string.IsNullOrEmpty(fullName)) { SetError(FullNameTextBox, FullNameErrorTextBlock, "Fullname can't be empty."); hasError = true; }
+            if (!dateOfBirth.HasValue) { SetError(DateOfBirthPicker, DateOfBirthErrorTextBlock, "Invalid date of birth."); hasError = true; }
+            if (string.IsNullOrEmpty(gender)) { SetError(GenderComboBox, GenderErrorTextBlock, "Please select gender."); hasError = true; }
+            if (string.IsNullOrEmpty(address)) { SetError(AddressTextBox, AddressErrorTextBlock, "Address cannot be empty."); hasError = true; }
+
+            return hasError;
         }
 
-        // Hàm xóa tất cả các thông báo lỗi
         private void ClearValidationErrors()
         {
-            UsernameTextBox.BorderBrush = null;
-            EmailTextBox.BorderBrush = null;
-            PasswordBox.BorderBrush = null;
-            FullNameTextBox.BorderBrush = null;
-            PhoneNumberTextBox.BorderBrush = null;
-            AddressTextBox.BorderBrush = null;
-            DateOfBirthPicker.BorderBrush = null;
-            GenderComboBox.BorderBrush = null;
+            UsernameErrorTextBlock.Text = string.Empty;
+            EmailErrorTextBlock.Text = string.Empty;
+            PasswordErrorTextBlock.Text = string.Empty;
+            FullNameErrorTextBlock.Text = string.Empty;
+            DateOfBirthErrorTextBlock.Text = string.Empty;
+            GenderErrorTextBlock.Text = string.Empty;
+            PhoneNumberErrorTextBlock.Text = string.Empty;
+            AddressErrorTextBlock.Text = string.Empty;
 
-            EmailErrorTextBlock.Text = "";
-            PhoneNumberErrorTextBlock.Text = "";
-            FullNameErrorTextBlock.Text = "";
-            PasswordErrorTextBlock.Text = "";
-            AddressErrorTextBlock.Text = "";
-            DateOfBirthErrorTextBlock.Text = "";
-            GenderErrorTextBlock.Text = "";
-
-            EmailErrorTextBlock.Visibility = Visibility.Collapsed;
-            PhoneNumberErrorTextBlock.Visibility = Visibility.Collapsed;
-            FullNameErrorTextBlock.Visibility = Visibility.Collapsed;
-            PasswordErrorTextBlock.Visibility = Visibility.Collapsed;
-            AddressErrorTextBlock.Visibility = Visibility.Collapsed;
-            DateOfBirthErrorTextBlock.Visibility = Visibility.Collapsed;
-            GenderErrorTextBlock.Visibility = Visibility.Collapsed;
+            UsernameTextBox.BorderBrush = Brushes.Gray;
+            EmailTextBox.BorderBrush = Brushes.Gray;
+            PasswordBox.BorderBrush = Brushes.Gray;
+            FullNameTextBox.BorderBrush = Brushes.Gray;
+            DateOfBirthPicker.BorderBrush = Brushes.Gray;
+            GenderComboBox.BorderBrush = Brushes.Gray;
+            PhoneNumberTextBox.BorderBrush = Brushes.Gray;
+            AddressTextBox.BorderBrush = Brushes.Gray;
         }
 
-        // Kiểm tra định dạng email hợp lệ
-        public bool IsEmailValid(string email)
+        private void SetError(Control control, TextBlock errorTextBlock, string errorMessage)
         {
-            var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            return Regex.IsMatch(email, emailPattern);
+            errorTextBlock.Text = errorMessage;
+            control.BorderBrush = Brushes.Red;
+            control.Focus();
         }
 
-        // Kiểm tra số điện thoại chỉ chứa số
-        public bool IsPhoneNumberValid(string phoneNumber)
-        {
-            return phoneNumber.All(char.IsDigit);
-        }
-
-        // Hàm hash mật khẩu bằng MD5
         private string HashPasswordMD5(string password)
         {
             using (MD5 md5 = MD5.Create())
             {
                 byte[] inputBytes = Encoding.ASCII.GetBytes(password);
                 byte[] hashBytes = md5.ComputeHash(inputBytes);
-                return Convert.ToHexString(hashBytes);  // Trả về chuỗi hex của MD5
+                return Convert.ToHexString(hashBytes);
             }
         }
 
-        // Tạo UserId dựa trên vai trò của người dùng
-        private string GenerateUserId(string role, PrnDbContext context)
+        private string GenerateUserId(string role, PrnDbFpContext context)
         {
             string prefix = role == "Student" ? "ST" : "IN";
             int userCount = context.Accounts.Count();
             return prefix + (userCount + 1).ToString("D2");
         }
 
+        public bool IsEmailValid(string email)
+        {
+            var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, emailPattern);
+        }
+
+        public bool IsPhoneNumberValid(string phoneNumber)
+        {
+            return phoneNumber.All(char.IsDigit);
+        }
+
         private void UploadButton_Click(object sender, RoutedEventArgs e)
         {
-            // Tạo và cấu hình hộp thoại chọn file.
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.png)|*.jpg;*.jpeg;*.png";
 
-            // Hiển thị hộp thoại và kiểm tra xem người dùng có chọn file hay không.
             if (openFileDialog.ShowDialog() == true)
             {
-                // Lấy đường dẫn file mà người dùng chọn.
-                string sourceFilePath = openFileDialog.FileName;
-
-                // Đường dẫn đích cụ thể trong project, ví dụ: thư mục "img/user-img" trong thư mục gốc của project.
-                string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-                string targetDirectory = IOPath.Combine(projectDirectory, "img", "user-img");
-
-                // Tạo thư mục nếu chưa tồn tại.
-                Directory.CreateDirectory(targetDirectory);
-
-                // Lấy tên file từ đường dẫn nguồn.
-                string fileName = IOPath.GetFileName(sourceFilePath);
-                string targetFilePath = IOPath.Combine(targetDirectory, fileName);
-
-                try
-                {
-                    // Sao chép file từ đường dẫn nguồn vào đường dẫn đích.
-                    File.Copy(sourceFilePath, targetFilePath, true);
-
-                    // Lưu trữ đường dẫn của file đã upload để sử dụng sau.
-                    UploadedPicturePath = targetFilePath;
-
-                    // Hiển thị ảnh trong Image control (nếu có).
-                    ProfilePictureImage.Source = new BitmapImage(new Uri(targetFilePath));
-
-                    MessageBox.Show("Image uploaded successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                catch (IOException ex)
-                {
-                    MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                UploadedPicture = new BitmapImage(new Uri(openFileDialog.FileName));
+                ProfilePictureImage.Source = UploadedPicture;
+                MessageBox.Show("Image uploaded successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-
-
     }
 }

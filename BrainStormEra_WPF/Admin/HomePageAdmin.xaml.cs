@@ -1,6 +1,7 @@
-﻿using System;
+﻿using BrainStormEra_WPF.ViewModel;
+using System;
 using System.Windows;
-
+using BrainStormEra_WPF.Models;
 namespace BrainStormEra_WPF
 {
     /// <summary>
@@ -8,9 +9,12 @@ namespace BrainStormEra_WPF
     /// </summary>
     public partial class HomePageAdmin : Window
     {
-        public HomePageAdmin()
+        private AccountViewModel _accountViewModel;
+        public HomePageAdmin(Account account)
         {
             InitializeComponent();
+            _accountViewModel = new AccountViewModel(account);
+            DataContext = _accountViewModel;
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
