@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Imaging;
 using BrainStormEra_WPF.Models;
-using BrainStormEra_WPF.ViewModel;
+using BrainStormEra_WPF.ViewModel.Account;
 
 namespace BrainStormEra_WPF
 {

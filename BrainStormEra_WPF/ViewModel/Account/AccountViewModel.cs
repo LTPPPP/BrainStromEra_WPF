@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using BrainStormEra_WPF.Models;
 
-namespace BrainStormEra_WPF.ViewModel
+namespace BrainStormEra_WPF.ViewModel.Account
 {
     public class AccountViewModel : BaseViewModel
     {
@@ -87,7 +87,7 @@ namespace BrainStormEra_WPF.ViewModel
             }
         }
 
-        public AccountViewModel(Account account)
+        public AccountViewModel(Models.Account account)
         {
             FullName = account.FullName ?? string.Empty;
             DateOfBirth = account.DateOfBirth;

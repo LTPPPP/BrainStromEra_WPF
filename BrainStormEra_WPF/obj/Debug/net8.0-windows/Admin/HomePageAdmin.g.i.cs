@@ -61,7 +61,7 @@ namespace BrainStormEra_WPF {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/BrainStormEra_WPF;component/admin/homepageadmin.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/BrainStormEra_WPF;V1.0.0.0;component/admin/homepageadmin.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Admin\HomePageAdmin.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

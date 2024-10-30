@@ -1,5 +1,5 @@
 ﻿using BrainStormEra_WPF.Models;
-using BrainStormEra_WPF.ViewModel;
+using BrainStormEra_WPF.ViewModel.Account;
 using System.Windows;
 
 namespace BrainStormEra_WPF
