@@ -32,4 +32,12 @@
     <Resource Include="img\user-img\default_user.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Feedback\" />
+    <Folder Include="Common\Enrollment\" />
+    <Folder Include="Course\Chapter\Lesson\" />
+    <Folder Include="img\Course\Chapter\Lesson\" />
+    <Folder Include="img\Certificate\" />
+  </ItemGroup>
+
 </Project>
