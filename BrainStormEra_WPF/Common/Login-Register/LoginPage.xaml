@@ -58,7 +58,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
                 <Button Content="Login" Width="120" Height="40" Margin="10" FontSize="16" 
                         Background="#FF50E3C2" Foreground="White" BorderBrush="#FF4A90E2" BorderThickness="2"
-                        Cursor="Hand" Opacity="0.9" Click="LoginButton_Click">
+                        Cursor="Hand" Opacity="0.9" Click="LoginButton_Click" >
                     <Button.Style>
                         <!-- Hover Effect on Button -->
                         <Style TargetType="Button">

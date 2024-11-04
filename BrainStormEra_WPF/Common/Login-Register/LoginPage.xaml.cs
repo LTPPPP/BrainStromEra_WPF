@@ -1,115 +1,55 @@
-﻿using BrainStormEra_WPF.Models;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
+﻿using BrainStormEra_WPF.ViewModel.Login;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace BrainStormEra_WPF
 {
     public partial class LoginPage : Window
     {
-        private readonly PrnDbFpContext _dbContext;
+        private LoginViewModel _viewModel;
 
         public LoginPage()
         {
             InitializeComponent();
-            _dbContext = new PrnDbFpContext();
-
-            // Gắn sự kiện khi nhấn phím Enter trên TextBox và PasswordBox
-            UsernameTextBox.KeyDown += OnEnterPressed;
-            PasswordBox.KeyDown += OnEnterPressed;
-        }
-
-        private void OnEnterPressed(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                LoginButton_Click(sender, e);
-            }
-        }
-
-        private void ReturnButton_Click(object sender, RoutedEventArgs e)
-        {
-            HomePageGuest homePageGuest = new HomePageGuest();
-            homePageGuest.Show();
-            this.Close();
+            _viewModel = new LoginViewModel();
+            DataContext = _viewModel;
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            string username = UsernameTextBox.Text;
-            string password = PasswordBox.Password;
+            // Get the values from the UI controls
+            _viewModel.Username = UsernameTextBox.Text;
+            _viewModel.Password = PasswordBox.Password;
 
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            // Execute the login command if it can execute
+            if (_viewModel.LoginCommand.CanExecute(null))
             {
-                ErrorMessageTextBlock.Text = "Username and Password cannot be empty.";
-                ErrorMessageTextBlock.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                string hashedPassword = ComputeMD5Hash(password);
+                _viewModel.LoginCommand.Execute(null);
 
-                var account = _dbContext.Accounts
-                    .FirstOrDefault(a => a.Username == username && a.Password == hashedPassword);
-
-                if (account != null)
-                {
-                    ErrorMessageTextBlock.Visibility = Visibility.Collapsed;
-
-                    switch (account.UserRole)
-                    {
-                        case 1: // Admin
-                            var adminPage = new HomePageAdmin(account);
-                            adminPage.Show();
-                            this.Close();
-                            break;
-                        case 2: // Instructor
-                            var instructorPage = new HomePageInstructor(account);
-                            instructorPage.Show();
-                            this.Close();
-                            break;
-                        case 3: // Learner
-                            var learnerPage = new HomePageLearner(account);
-                            learnerPage.Show();
-                            this.Close();
-                            break;
-                    }
-                }
-                else
-                {
-                    ErrorMessageTextBlock.Text = "Invalid username or password.";
-                    ErrorMessageTextBlock.Visibility = Visibility.Visible;
-
-                    // Clear the Username and Password fields when login fails
-                    UsernameTextBox.Clear();
-                    PasswordBox.Clear();
-                }
-            }
-        }
-
-        private string ComputeMD5Hash(string input)
-        {
-            using (MD5 md5 = MD5.Create())
-            {
-                byte[] inputBytes = Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    sb.Append(hashBytes[i].ToString("X2"));
-                }
-                return sb.ToString();
+                // Update error message visibility
+                ErrorMessageTextBlock.Text = _viewModel.ErrorMessage;
+                ErrorMessageTextBlock.Visibility =
+                    string.IsNullOrEmpty(_viewModel.ErrorMessage)
+                    ? Visibility.Collapsed
+                    : Visibility.Visible;
             }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            UsernameTextBox.Clear();
-            PasswordBox.Clear();
+            // Execute the cancel command
+            _viewModel.CancelCommand.Execute(null);
+
+            // Clear the UI controls
+            UsernameTextBox.Text = string.Empty;
+            PasswordBox.Password = string.Empty;
             ErrorMessageTextBlock.Visibility = Visibility.Collapsed;
+        }
+
+        private void ReturnButton_Click(object sender, RoutedEventArgs e)
+        {
+            var homePageGuest = new HomePageGuest();
+            homePageGuest.Show();
+            this.Close();
         }
     }
 }
