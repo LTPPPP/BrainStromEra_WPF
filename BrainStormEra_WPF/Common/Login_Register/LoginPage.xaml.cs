@@ -14,33 +14,42 @@ namespace BrainStormEra_WPF.Common.Login_Register
             InitializeComponent();
             _viewModel = new LoginViewModel();
             DataContext = _viewModel;
+        }
 
-            // Optional: Add input validation
-            UsernameTextBox.TextChanged += (s, e) => ValidateInput();
-            PasswordBox.PasswordChanged += (s, e) => ValidateInput();
+        private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ValidateInput();
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ValidateInput();
         }
 
         private void ValidateInput()
         {
-            LoginButton.IsEnabled = !string.IsNullOrWhiteSpace(UsernameTextBox.Text)
-                                  && !string.IsNullOrWhiteSpace(PasswordBox.Password);
+            if (LoginButton != null)
+            {
+                LoginButton.IsEnabled = !string.IsNullOrWhiteSpace(UsernameTextBox?.Text)
+                                      && !string.IsNullOrWhiteSpace(PasswordBox?.Password);
+            }
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Get the values from the UI controls
-                _viewModel.Username = UsernameTextBox.Text;
-                _viewModel.Password = PasswordBox.Password;
-
-                // Execute the login command if it can execute
-                if (_viewModel.LoginCommand.CanExecute(null))
+                if (UsernameTextBox != null && PasswordBox != null)
                 {
-                    _viewModel.LoginCommand.Execute(null);
+                    _viewModel.Username = UsernameTextBox.Text;
+                    _viewModel.Password = PasswordBox.Password;
 
-                    // Update error message visibility
-                    UpdateErrorMessage(_viewModel.ErrorMessage);
+                    if (_viewModel.LoginCommand.CanExecute(null))
+                    {
+                        _viewModel.LoginCommand.Execute(null);
+                        this.Close();
+                        UpdateErrorMessage(_viewModel.ErrorMessage);
+                    }
                 }
             }
             catch (Exception ex)
@@ -51,23 +60,27 @@ namespace BrainStormEra_WPF.Common.Login_Register
 
         private void UpdateErrorMessage(string message)
         {
-            ErrorMessageTextBlock.Text = message;
-            ErrorMessageTextBlock.Visibility = string.IsNullOrEmpty(message)
-                ? Visibility.Collapsed
-                : Visibility.Visible;
+            if (ErrorMessageTextBlock != null)
+            {
+                ErrorMessageTextBlock.Text = message;
+                ErrorMessageTextBlock.Visibility = string.IsNullOrEmpty(message)
+                    ? Visibility.Collapsed
+                    : Visibility.Visible;
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Execute the cancel command
                 _viewModel.CancelCommand?.Execute(null);
 
-                // Clear the UI controls
-                UsernameTextBox.Text = string.Empty;
-                PasswordBox.Password = string.Empty;
-                ErrorMessageTextBlock.Visibility = Visibility.Collapsed;
+                if (UsernameTextBox != null && PasswordBox != null && ErrorMessageTextBlock != null)
+                {
+                    UsernameTextBox.Text = string.Empty;
+                    PasswordBox.Password = string.Empty;
+                    ErrorMessageTextBlock.Visibility = Visibility.Collapsed;
+                }
             }
             catch (Exception ex)
             {

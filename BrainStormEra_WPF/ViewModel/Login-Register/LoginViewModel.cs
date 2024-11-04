@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace BrainStormEra_WPF.ViewModel.Login_Register
 {
@@ -100,22 +101,29 @@ namespace BrainStormEra_WPF.ViewModel.Login_Register
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Window window = null;
+                Window targetWindow = null;
+
+                // Determine which window to open based on the user role
                 switch (account.UserRole)
                 {
                     case 1:
-                        window = new HomePageAdmin(account);
+                        var homePageAdmin = new HomePageAdmin(account);
+                        homePageAdmin.Show();
                         break;
                     case 2:
-                        window = new HomePageInstructor(account);
+                        var homePageInstructor = new HomePageInstructor(account);
+                        homePageInstructor.Show();
                         break;
                     case 3:
-                        window = new HomePageLearner(account);
+                        var homePageLearner = new HomePageLearner(account);
+                        homePageLearner.Show();
                         break;
                 }
-                window?.Show();
+
+                // Close the current login window after opening the target window
                 Application.Current.MainWindow.Close();
             });
         }
+
     }
 }
