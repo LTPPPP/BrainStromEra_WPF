@@ -1,6 +1,7 @@
 ﻿using System.Security.AccessControl;
 using System.Windows;
-
+using BrainStormEra_WPF.Common;
+using BrainStormEra_WPF.Common.Login_Register;
 namespace BrainStormEra_WPF
 {
     public partial class HomePageGuest : Window

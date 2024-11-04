@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
-namespace BrainStormEra_WPF.ViewModel.Login
+namespace BrainStormEra_WPF.ViewModel.Login_Register
 {
     public class LoginViewModel : BaseViewModel
     {
