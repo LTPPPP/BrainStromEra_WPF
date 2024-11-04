@@ -6,12 +6,13 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using BrainStormEra_WPF.Models;
 using BrainStormEra_WPF.ViewModel.Account;
+using Microsoft.EntityFrameworkCore;
 
 namespace BrainStormEra_WPF
 {
     public partial class Profile : Page
     {
-        private AccountViewModel _accountViewModel;
+        private readonly AccountViewModel _accountViewModel;
 
         public Profile(AccountViewModel accountViewModel)
         {
@@ -19,7 +20,7 @@ namespace BrainStormEra_WPF
             _accountViewModel = accountViewModel;
             DataContext = _accountViewModel;
 
-            // Gán ảnh profile từ ViewModel
+            // Load profile image from ViewModel
             if (_accountViewModel.UserPicture != null)
             {
                 ProfileImage.ImageSource = _accountViewModel.UserPicture;
@@ -28,13 +29,20 @@ namespace BrainStormEra_WPF
 
         private void SaveChanges_Click(object sender, RoutedEventArgs e)
         {
-            UpdateAccount();
-            MessageBox.Show("Profile updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            try
+            {
+                UpdateAccount();
+                MessageBox.Show("Profile updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating profile: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ChangePicture_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            var openFileDialog = new OpenFileDialog
             {
                 Filter = "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg",
                 Title = "Select a Profile Picture"
@@ -46,7 +54,7 @@ namespace BrainStormEra_WPF
                 var image = new BitmapImage(new Uri(selectedImagePath));
                 ProfileImage.ImageSource = image;
 
-                // Cập nhật ảnh trong ViewModel
+                // Update image in ViewModel
                 using var memoryStream = new MemoryStream();
                 var encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(image));
@@ -57,27 +65,30 @@ namespace BrainStormEra_WPF
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            // Quay lại trang trước đó
-            NavigationService.GoBack();
+            NavigationService?.GoBack();
         }
 
         private void UpdateAccount()
         {
-            // Cập nhật vào cơ sở dữ liệu
-            using (var context = new PrnDbFpContext())
-            {
-                var existingAccount = context.Accounts.Find(_accountViewModel.UserId);
-                if (existingAccount != null)
-                {
-                    existingAccount.FullName = _accountViewModel.FullName;
-                    existingAccount.DateOfBirth = _accountViewModel.DateOfBirth;
-                    existingAccount.Gender = _accountViewModel.Gender;
-                    existingAccount.PhoneNumber = _accountViewModel.PhoneNumber;
-                    existingAccount.UserAddress = _accountViewModel.UserAddress;
-                    existingAccount.UserPicture = _accountViewModel.UserPictureBytes;
+            using var context = new PrnDbFpContext();
+            var existingAccount = context.Accounts.Find(_accountViewModel.UserId);
 
-                    context.SaveChanges();
-                }
+            if (existingAccount != null)
+            {
+                existingAccount.FullName = _accountViewModel.FullName;
+                existingAccount.DateOfBirth = _accountViewModel.DateOfBirth;
+                existingAccount.Gender = _accountViewModel.Gender;
+                existingAccount.PhoneNumber = _accountViewModel.PhoneNumber;
+                existingAccount.UserAddress = _accountViewModel.UserAddress;
+                existingAccount.UserPicture = _accountViewModel.UserPictureBytes;
+
+                // Explicitly mark the entity as modified
+                context.Entry(existingAccount).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            else
+            {
+                MessageBox.Show("User account not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
