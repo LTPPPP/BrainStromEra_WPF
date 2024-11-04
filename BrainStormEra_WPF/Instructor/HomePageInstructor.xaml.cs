@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using BrainStormEra_WPF.Instructor;
 using BrainStormEra_WPF.Models;
 using BrainStormEra_WPF.ViewModel.Account;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BrainStormEra_WPF
 {
@@ -33,5 +35,13 @@ namespace BrainStormEra_WPF
                 this.Close();
             }
         }
+
+
+        private void Click_Course(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new CourseIntructor();
+        }
+
+
     }
 }

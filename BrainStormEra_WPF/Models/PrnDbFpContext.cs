@@ -37,19 +37,19 @@ public partial class PrnDbFpContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server= LTP;Database=PRN_DB_FP;uid=sa;pwd=01654460072ltp;encrypt=true;trustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-9CBUJ8HG;Initial Catalog=PRN_DB_FP;User ID=sa;Password=Khang02022004;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__account__B9BE370F1CE0719D");
+            entity.HasKey(e => e.UserId).HasName("PK__account__B9BE370F0C0C27F7");
 
             entity.ToTable("account");
 
-            entity.HasIndex(e => e.UserEmail, "UQ__account__B0FBA21240273EFC").IsUnique();
+            entity.HasIndex(e => e.UserEmail, "UQ__account__B0FBA212519C7B2D").IsUnique();
 
-            entity.HasIndex(e => e.Username, "UQ__account__F3DBC572C4D97DFB").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__account__F3DBC572FBD2A290").IsUnique();
 
             entity.Property(e => e.UserId)
                 .HasMaxLength(255)
@@ -93,12 +93,12 @@ public partial class PrnDbFpContext : DbContext
             entity.HasOne(d => d.UserRoleNavigation).WithMany(p => p.Accounts)
                 .HasForeignKey(d => d.UserRole)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__account__user_ro__440B1D61");
+                .HasConstraintName("FK__account__user_ro__3F466844");
         });
 
         modelBuilder.Entity<Chapter>(entity =>
         {
-            entity.HasKey(e => e.ChapterId).HasName("PK__chapter__745EFE87063F8047");
+            entity.HasKey(e => e.ChapterId).HasName("PK__chapter__745EFE870C924B61");
 
             entity.ToTable("chapter");
 
@@ -126,17 +126,17 @@ public partial class PrnDbFpContext : DbContext
             entity.HasOne(d => d.ChapterStatusNavigation).WithMany(p => p.Chapters)
                 .HasForeignKey(d => d.ChapterStatus)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__chapter__chapter__60A75C0F");
+                .HasConstraintName("FK__chapter__chapter__5070F446");
 
             entity.HasOne(d => d.Course).WithMany(p => p.Chapters)
                 .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK__chapter__course___5FB337D6");
+                .HasConstraintName("FK__chapter__course___4F7CD00D");
         });
 
         modelBuilder.Entity<Course>(entity =>
         {
-            entity.HasKey(e => e.CourseId).HasName("PK__course__8F1EF7AE4AE00CF2");
+            entity.HasKey(e => e.CourseId).HasName("PK__course__8F1EF7AE7FF5123C");
 
             entity.ToTable("course");
 
@@ -168,25 +168,25 @@ public partial class PrnDbFpContext : DbContext
             entity.HasOne(d => d.CourseStatusNavigation).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.CourseStatus)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__course__course_s__59FA5E80");
+                .HasConstraintName("FK__course__course_s__45F365D3");
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.CreatedBy)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__course__created___5AEE82B9");
+                .HasConstraintName("FK__course__created___46E78A0C");
 
             entity.HasMany(d => d.CourseCategories).WithMany(p => p.Courses)
                 .UsingEntity<Dictionary<string, object>>(
                     "CourseCategoryMapping",
                     r => r.HasOne<CourseCategory>().WithMany()
                         .HasForeignKey("CourseCategoryId")
-                        .HasConstraintName("FK__course_ca__cours__66603565"),
+                        .HasConstraintName("FK__course_ca__cours__4AB81AF0"),
                     l => l.HasOne<Course>().WithMany()
                         .HasForeignKey("CourseId")
-                        .HasConstraintName("FK__course_ca__cours__656C112C"),
+                        .HasConstraintName("FK__course_ca__cours__49C3F6B7"),
                     j =>
                     {
-                        j.HasKey("CourseId", "CourseCategoryId").HasName("PK__course_c__10F922204E694AC2");
+                        j.HasKey("CourseId", "CourseCategoryId").HasName("PK__course_c__10F92220B2CF053E");
                         j.ToTable("course_category_mapping");
                         j.IndexerProperty<string>("CourseId")
                             .HasMaxLength(255)
@@ -201,7 +201,7 @@ public partial class PrnDbFpContext : DbContext
 
         modelBuilder.Entity<CourseCategory>(entity =>
         {
-            entity.HasKey(e => e.CourseCategoryId).HasName("PK__course_c__FE7D58E872173548");
+            entity.HasKey(e => e.CourseCategoryId).HasName("PK__course_c__FE7D58E8A330A6C7");
 
             entity.ToTable("course_category");
 
@@ -217,7 +217,7 @@ public partial class PrnDbFpContext : DbContext
 
         modelBuilder.Entity<Enrollment>(entity =>
         {
-            entity.HasKey(e => e.EnrollmentId).HasName("PK__enrollme__6D24AA7AC7A4ABD7");
+            entity.HasKey(e => e.EnrollmentId).HasName("PK__enrollme__6D24AA7A62D45419");
 
             entity.ToTable("enrollment");
 
@@ -246,22 +246,22 @@ public partial class PrnDbFpContext : DbContext
             entity.HasOne(d => d.Course).WithMany(p => p.Enrollments)
                 .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK__enrollmen__cours__72C60C4A");
+                .HasConstraintName("FK__enrollmen__cours__5EBF139D");
 
             entity.HasOne(d => d.EnrollmentStatusNavigation).WithMany(p => p.Enrollments)
                 .HasForeignKey(d => d.EnrollmentStatus)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__enrollmen__enrol__73BA3083");
+                .HasConstraintName("FK__enrollmen__enrol__5FB337D6");
 
             entity.HasOne(d => d.User).WithMany(p => p.Enrollments)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK__enrollmen__user___71D1E811");
+                .HasConstraintName("FK__enrollmen__user___5DCAEF64");
         });
 
         modelBuilder.Entity<Feedback>(entity =>
         {
-            entity.HasKey(e => e.FeedbackId).HasName("PK__feedback__7A6B2B8C9164F6CF");
+            entity.HasKey(e => e.FeedbackId).HasName("PK__feedback__7A6B2B8C8ACD3B23");
 
             entity.ToTable("feedback");
 
@@ -291,16 +291,16 @@ public partial class PrnDbFpContext : DbContext
 
             entity.HasOne(d => d.Course).WithMany(p => p.Feedbacks)
                 .HasForeignKey(d => d.CourseId)
-                .HasConstraintName("FK__feedback__course__7A672E12");
+                .HasConstraintName("FK__feedback__course__66603565");
 
             entity.HasOne(d => d.User).WithMany(p => p.Feedbacks)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__feedback__user_i__797309D9");
+                .HasConstraintName("FK__feedback__user_i__656C112C");
         });
 
         modelBuilder.Entity<Lesson>(entity =>
         {
-            entity.HasKey(e => e.LessonId).HasName("PK__lesson__6421F7BE8FD461CC");
+            entity.HasKey(e => e.LessonId).HasName("PK__lesson__6421F7BE3D73CCE5");
 
             entity.ToTable("lesson");
 
@@ -330,22 +330,22 @@ public partial class PrnDbFpContext : DbContext
             entity.HasOne(d => d.Chapter).WithMany(p => p.Lessons)
                 .HasForeignKey(d => d.ChapterId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK__lesson__chapter___6B24EA82");
+                .HasConstraintName("FK__lesson__chapter___571DF1D5");
 
             entity.HasOne(d => d.LessonStatusNavigation).WithMany(p => p.Lessons)
                 .HasForeignKey(d => d.LessonStatus)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__lesson__lesson_s__6D0D32F4");
+                .HasConstraintName("FK__lesson__lesson_s__59063A47");
 
             entity.HasOne(d => d.LessonType).WithMany(p => p.Lessons)
                 .HasForeignKey(d => d.LessonTypeId)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__lesson__lesson_t__6C190EBB");
+                .HasConstraintName("FK__lesson__lesson_t__5812160E");
         });
 
         modelBuilder.Entity<LessonType>(entity =>
         {
-            entity.HasKey(e => e.LessonTypeId).HasName("PK__lesson_t__F5960D1E28C5F249");
+            entity.HasKey(e => e.LessonTypeId).HasName("PK__lesson_t__F5960D1E41F8A358");
 
             entity.ToTable("lesson_type");
 
@@ -360,7 +360,7 @@ public partial class PrnDbFpContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.UserRole).HasName("PK__role__68057FECD4C061E0");
+            entity.HasKey(e => e.UserRole).HasName("PK__role__68057FECE5C9C32E");
 
             entity.ToTable("role");
 
@@ -375,7 +375,7 @@ public partial class PrnDbFpContext : DbContext
 
         modelBuilder.Entity<Status>(entity =>
         {
-            entity.HasKey(e => e.StatusId).HasName("PK__status__3683B5314D827A19");
+            entity.HasKey(e => e.StatusId).HasName("PK__status__3683B5311C067F08");
 
             entity.ToTable("status");
 

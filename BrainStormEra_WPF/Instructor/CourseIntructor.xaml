@@ -1,0 +1,75 @@
+﻿<Page x:Class="BrainStormEra_WPF.Instructor.CourseIntructor"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+          xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+          xmlns:local="clr-namespace:BrainStormEra_WPF.Instructor"
+          mc:Ignorable="d" 
+          d:DesignHeight="450" d:DesignWidth="800"
+          Background="Azure"
+          Title="CourseIntructor">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+
+            <RowDefinition Height="5*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="0.8*"></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Course ID:" FontSize="15" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Course Name:" FontSize="15" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Description:" FontSize="15" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Status:" FontSize="15" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Course Picture:" FontSize="15" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Price:" FontSize="15" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Created At:" FontSize="15" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Created By:" FontSize="15" HorizontalAlignment="Right"/>
+
+
+        <TextBox Name="Id" Text="{Binding newitem.CourseId, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="10,1,10,1"/>
+        <TextBox Name="CourseName" Text="{Binding newitem.CourseName, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="10,1,10,1"/>
+        <TextBox Name="CourseDescription" Text="{Binding newitem.CourseDescription, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Margin="10,1,10,1"/>
+        <TextBox Name="CourseStatus" Grid.Row="3" Text="{Binding newitem.CourseStatus, Mode=TwoWay}" Grid.Column="1" Margin="10,1,10,1"/>
+        <TextBox Name="CoursePicture" Grid.Row="4" Text="{Binding newitem.CoursePicture, Mode=TwoWay}" Grid.Column="1" Margin="10,1,10,1"/>
+        <TextBox Name="Price" Grid.Row="5" Text="{Binding newitem.Price, Mode=TwoWay}" Grid.Column="1" Margin="10,1,10,1"/>
+        <TextBox Name="CourseCreatedAt" Grid.Row="6" Text="{Binding newitem.CourseCreatedAt}" Grid.Column="1" Margin="10,1,10,1"/>
+        <TextBox Name="CreatedBy" Grid.Row="7" Text="{Binding newitem.CreatedBy}" Grid.Column="1" Margin="10,1,10,1"/>
+
+
+        <Button Name="btnAddSmartphone" Command="{Binding Addcomand}" Content="ADD" Grid.Row="2" Grid.Column="3" Margin="0,5,0,5" Background="LightGreen" ></Button>
+        <Button Name="btnDeleteSmartphone" Command="{Binding Deletecomand}" Content="DELETE" Grid.Row="3" Grid.Column="3" Margin="0,5,0,5" Background="OrangeRed"></Button>
+        <Button Name="btnSearchSmartphone" Command="{Binding Searchcomand}" Content="SEARCH" Grid.Row="4" Grid.Column="3" Margin="0,5,0,5" Background="CornflowerBlue"></Button>
+        <Button Name="ManageChapter" Click="ManageChapter_Click" Content="CHAPTER" Grid.Row="5" Grid.Column="3" Margin="0,5,0,5" Background="CornflowerBlue" />
+
+
+
+        <ListView Name="CustomerListView" SelectedItem="{Binding selectitem, Mode=TwoWay}" ItemsSource="{Binding courselist}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding CourseId}" Width="130"></GridViewColumn>
+                    <GridViewColumn Header="Brand" DisplayMemberBinding="{Binding CourseName}" Width="130"></GridViewColumn>
+                    <GridViewColumn Header="Model" DisplayMemberBinding="{Binding CourseDescription}" Width="130"></GridViewColumn>
+                    <GridViewColumn Header="Os" DisplayMemberBinding="{Binding CourseStatus}" Width="130"></GridViewColumn>
+                    <GridViewColumn Header="ReleaseYear" DisplayMemberBinding="{Binding CoursePicture}" Width="130"></GridViewColumn>
+                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" Width="130"></GridViewColumn>
+                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding CourseCreatedAt}" Width="130"></GridViewColumn>
+                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding CreatedBy}" Width="130"></GridViewColumn>
+
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>

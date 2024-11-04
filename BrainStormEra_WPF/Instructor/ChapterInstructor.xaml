@@ -1,0 +1,50 @@
+﻿<Page x:Class="BrainStormEra_WPF.Instructor.ChapterInstructor"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="ChapterInstructor"
+      Background="AliceBlue" Height="481">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Input fields and buttons -->
+        <StackPanel Orientation="Vertical" Grid.Row="0" Margin="10">
+            <TextBlock Text="Chapter ID:"/>
+            <TextBox Text="{Binding newitem.ChapterId, Mode=TwoWay}" Margin="0,5"/>
+
+            <TextBlock Text="Course ID:"/>
+            <TextBox Text="{Binding NewChapter.CourseId, Mode=TwoWay}" IsReadOnly="True" Margin="0,5"/>
+
+            <TextBlock Text="Chapter Name:"/>
+            <TextBox Text="{Binding NewChapter.ChapterName, Mode=TwoWay}" Margin="0,5"/>
+
+            <TextBlock Text="Description:"/>
+            <TextBox Text="{Binding NewChapter.ChapterDescription, Mode=TwoWay}" Margin="0,5"/>
+
+            <TextBlock Text="Order:"/>
+            <TextBox Text="{Binding NewChapter.ChapterOrder, Mode=TwoWay}" Margin="0,5"/>
+
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Add" Command="{Binding AddCommand}" Margin="5"/>
+                <Button Content="Delete" Command="{Binding DeleteCommand}" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- ListView for chapters -->
+        <ListView Grid.Row="1" ItemsSource="{Binding chapterList}" SelectedItem="{Binding SelectedChapter}" Margin="10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ChapterId}" Width="100"/>
+                    <GridViewColumn Header="Course ID" DisplayMemberBinding="{Binding CourseId}" Width="100"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding ChapterName}" Width="200"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding ChapterDescription}" Width="250"/>
+                    <GridViewColumn Header="Order" DisplayMemberBinding="{Binding ChapterOrder}" Width="100"/>
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding ChapterStatus}" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>

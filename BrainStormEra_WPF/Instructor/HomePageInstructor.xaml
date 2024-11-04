@@ -9,8 +9,8 @@
         WindowState="Maximized"
         ResizeMode="CanResizeWithGrip" 
         WindowStartupLocation="CenterScreen"
-        Background="Beige">
-    <Grid>
+       >
+   
         <DockPanel>
             <!-- Top Navigation Bar -->
             <Grid DockPanel.Dock="Top" Background="Gray" Height="60">
@@ -22,20 +22,25 @@
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
-</Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="auto" />
+
+
+
                 </Grid.RowDefinitions>
+
 
                 <!-- Logo -->
                 <Image Source="/BrainStormEra_WPF;component/img/logo_BrainStormEra.png" Width="60" Height="60" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" />
+
 
                 <!-- Dashboard Text -->
                 <TextBlock Text="DASHBOARD" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" FontSize="20" FontWeight="Bold" Foreground="#2D4059" />
 
                 <!-- Course Section -->
-                <TextBlock Text="COURSE" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" FontSize="18" FontWeight="Bold" Foreground="#2D4059" />
+                <Button Content="COURSE" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" FontSize="18" FontWeight="Bold" Foreground="#2D4059" Click="Click_Course" />
 
                 <!-- User Section -->
                 <TextBlock Text="USER" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" FontSize="18" FontWeight="Bold" Foreground="#2D4059" />
@@ -59,12 +64,18 @@
                         Width="100" Height="30" 
                         Grid.Column="6" 
                         Click="LogoutButton_Click"/>
+
+
+
             </Grid>
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Visible" 
+               DockPanel.Dock="Top" 
+               VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Height="690"/>
 
             <!-- Footer -->
             <StackPanel DockPanel.Dock="Bottom" Background="Gray" Height="50" VerticalAlignment="Bottom">
                 <TextBlock Text="© BrainStormEra 2024" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="White"/>
             </StackPanel>
         </DockPanel>
-    </Grid>
+    
 </Window>
