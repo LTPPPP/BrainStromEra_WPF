@@ -4,11 +4,15 @@
           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
           xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
           xmlns:local="clr-namespace:BrainStormEra_WPF.Instructor"
+           xmlns:local2="clr-namespace:BrainStormEra_WPF.Utilities"
           mc:Ignorable="d" 
           d:DesignHeight="450" d:DesignWidth="800"
           Background="Azure"
           Title="CourseIntructor">
 
+    <Page.Resources>
+        <local2:StatusConverter x:Key="StatusConverter"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
@@ -19,54 +23,75 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
 
-            <RowDefinition Height="5*"></RowDefinition>
+
+            <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.5*"></ColumnDefinition>
-            <ColumnDefinition Width="4*"></ColumnDefinition>
-            <ColumnDefinition Width="0.8*"></ColumnDefinition>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+
+            <ColumnDefinition Width="1*"></ColumnDefinition>
 
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Course ID:" FontSize="15" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Course Name:" FontSize="15" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Description:" FontSize="15" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Status:" FontSize="15" HorizontalAlignment="Right"/>
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Course Picture:" FontSize="15" HorizontalAlignment="Right"/>
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="Price:" FontSize="15" HorizontalAlignment="Right"/>
-        <TextBlock Grid.Row="6" Grid.Column="0" Text="Created At:" FontSize="15" HorizontalAlignment="Right"/>
-        <TextBlock Grid.Row="7" Grid.Column="0" Text="Created By:" FontSize="15" HorizontalAlignment="Right"/>
+
+        <Button Content="Upload Picture" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Margin="10,1,10,1" FontSize="15" Command="{Binding UploadPictureCommand}"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Price:" FontSize="15" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Created At:" FontSize="15" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Created By:" FontSize="15" HorizontalAlignment="Right"/>
 
 
-        <TextBox Name="Id" Text="{Binding newitem.CourseId, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="10,1,10,1"/>
-        <TextBox Name="CourseName" Text="{Binding newitem.CourseName, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="10,1,10,1"/>
-        <TextBox Name="CourseDescription" Text="{Binding newitem.CourseDescription, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Margin="10,1,10,1"/>
-        <TextBox Name="CourseStatus" Grid.Row="3" Text="{Binding newitem.CourseStatus, Mode=TwoWay}" Grid.Column="1" Margin="10,1,10,1"/>
-        <TextBox Name="CoursePicture" Grid.Row="4" Text="{Binding newitem.CoursePicture, Mode=TwoWay}" Grid.Column="1" Margin="10,1,10,1"/>
-        <TextBox Name="Price" Grid.Row="5" Text="{Binding newitem.Price, Mode=TwoWay}" Grid.Column="1" Margin="10,1,10,1"/>
-        <TextBox Name="CourseCreatedAt" Grid.Row="6" Text="{Binding newitem.CourseCreatedAt}" Grid.Column="1" Margin="10,1,10,1"/>
-        <TextBox Name="CreatedBy" Grid.Row="7" Text="{Binding newitem.CreatedBy}" Grid.Column="1" Margin="10,1,10,1"/>
+        <TextBox Name="Id" Text="{Binding newitem.CourseId, Mode=TwoWay}" IsReadOnly="True" Grid.Row="0" Grid.Column="1" Margin="10,0,10,20"/>
+        <TextBox Name="CourseName" Text="{Binding newitem.CourseName, Mode=TwoWay}"  Grid.Row="1" Grid.Column="1" Margin="10,0,10,20"/>
+        <TextBox Name="CourseDescription" Text="{Binding newitem.CourseDescription, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Margin="10,0,10,20"/>
+        <ComboBox Grid.Row="3" Grid.Column="1" 
+          SelectedValue="{Binding newitem.CourseStatus, Mode=TwoWay}"
+          DisplayMemberPath="Value" 
+          SelectedValuePath="Key" 
+          ItemsSource="{Binding StatusOptions}" 
+          Margin="10,0,10,20" />
+        <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="10" 
+        VerticalAlignment="Center" HorizontalAlignment="Center"
+        Grid.Row="0" Grid.RowSpan="6" Grid.Column="2" Grid.ColumnSpan="2"
+        Margin="10">
+            <Image Source="{Binding CourseImage}" Width="auto" Height="auto" VerticalAlignment="Center"
+                Stretch="Fill" Grid.Row="0" Grid.RowSpan="6"  Grid.Column="2" Grid.ColumnSpan="2" Margin="15,15,15,15" />
+        </Border>
+        <TextBox Name="Price" Grid.Row="4" Text="{Binding newitem.Price, Mode=TwoWay}" Grid.Column="1" Margin="10,0,10,20"/>
+        <DatePicker Name="CourseCreatedAt" Grid.Row="5" Text="{Binding newitem.CourseCreatedAt, Mode=TwoWay}" Grid.Column="1" Margin="10,0,10,20"/>
+        <TextBox Name="CreatedBy" Grid.Row="6" Text="{Binding newitem.CreatedBy, Mode=TwoWay}" IsReadOnly="True" Grid.Column="1" Margin="10,0,10,20"/>
 
 
-        <Button Name="btnAddSmartphone" Command="{Binding Addcomand}" Content="ADD" Grid.Row="2" Grid.Column="3" Margin="0,5,0,5" Background="LightGreen" ></Button>
-        <Button Name="btnDeleteSmartphone" Command="{Binding Deletecomand}" Content="DELETE" Grid.Row="3" Grid.Column="3" Margin="0,5,0,5" Background="OrangeRed"></Button>
-        <Button Name="btnSearchSmartphone" Command="{Binding Searchcomand}" Content="SEARCH" Grid.Row="4" Grid.Column="3" Margin="0,5,0,5" Background="CornflowerBlue"></Button>
-        <Button Name="ManageChapter" Click="ManageChapter_Click" Content="CHAPTER" Grid.Row="5" Grid.Column="3" Margin="0,5,0,5" Background="CornflowerBlue" />
+        <Button Name="btnAdd" Command="{Binding Addcomand}" Content="ADD" Grid.Row="8" Grid.Column="2" Margin="0,5,0,5" Background="LightGreen" ></Button>
+        <Button Name="btnDelete" Command="{Binding Deletecomand}" Content="DELETE" Grid.Row="9" Grid.Column="2" Margin="0,5,0,5" Background="OrangeRed"></Button>
+        <Button Name="btnEdit" Command="{Binding Editcomand}" Content="EDIT" Grid.Row="10" Grid.Column="2" Margin="0,5,0,5" Background="CornflowerBlue"></Button>
+        <Button Name="btnFeedback" Command="{Binding FeedbackCommand}" Content="VIEWFEEDBACK" Grid.Row="11" Grid.Column="2" Margin="0,5,0,5" Background="Cornsilk"></Button>
+        <Button Content="Clear"  Command="{Binding ClearCommand}" Grid.Row="7" Grid.Column="1" 
+       Margin="10,0,10,20" Background="LightGray"/>
+
+        <Button Name="ManageChapter"  Command="{Binding ViewChapterCommand}" Content="ViewChapter →" Height="30" HorizontalAlignment="Right" Width="90" Grid.Row="11" Grid.Column="3" Margin="20,5,5,5" Background="Cyan" />
 
 
 
-        <ListView Name="CustomerListView" SelectedItem="{Binding selectitem, Mode=TwoWay}" ItemsSource="{Binding courselist}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3">
+        <ListView Name="CustomerListView" SelectedItem="{Binding selectitem, Mode=TwoWay}" 
+                  ItemsSource="{Binding courselist}" Grid.Row="8" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,10,10,10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding CourseId}" Width="130"></GridViewColumn>
-                    <GridViewColumn Header="Brand" DisplayMemberBinding="{Binding CourseName}" Width="130"></GridViewColumn>
-                    <GridViewColumn Header="Model" DisplayMemberBinding="{Binding CourseDescription}" Width="130"></GridViewColumn>
-                    <GridViewColumn Header="Os" DisplayMemberBinding="{Binding CourseStatus}" Width="130"></GridViewColumn>
-                    <GridViewColumn Header="ReleaseYear" DisplayMemberBinding="{Binding CoursePicture}" Width="130"></GridViewColumn>
-                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" Width="130"></GridViewColumn>
-                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding CourseCreatedAt}" Width="130"></GridViewColumn>
-                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding CreatedBy}" Width="130"></GridViewColumn>
-
+                    <GridViewColumn Header="CourseId" DisplayMemberBinding="{Binding CourseId}" Width="50"></GridViewColumn>
+                    <GridViewColumn Header="CourseName" DisplayMemberBinding="{Binding CourseName}" Width="150"></GridViewColumn>
+                    <GridViewColumn Header="CourseDescription" DisplayMemberBinding="{Binding CourseDescription}" Width="200"></GridViewColumn>
+                    <GridViewColumn Header="CourseStatus" DisplayMemberBinding="{Binding CourseStatus, Converter={StaticResource StatusConverter}}" Width="80"></GridViewColumn>
+                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" Width="90"></GridViewColumn>
+                    <GridViewColumn Header="CourseCreatedAt" DisplayMemberBinding="{Binding CourseCreatedAt}" Width="190"></GridViewColumn>
+                    <GridViewColumn Header="CreatedBy" DisplayMemberBinding="{Binding CreatedBy}" Width="187"></GridViewColumn>
 
                 </GridView>
             </ListView.View>

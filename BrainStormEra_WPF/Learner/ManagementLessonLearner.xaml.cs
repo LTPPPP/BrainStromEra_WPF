@@ -1,8 +1,4 @@
-﻿using BrainStormEra_WPF.ViewModel;
-using BrainStormEra_WPF.ViewModel.Course;
-using BrainStormEra_WPF.ViewModel.Course.Chapter;
-using BrainStormEra_WPF.ViewModel.Feedback;
-using Microsoft.VisualBasic.ApplicationServices;
+﻿using BrainStormEra_WPF.ViewModel.Course.Chapter.Lesson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,22 +13,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-namespace BrainStormEra_WPF.Instructor
+
+namespace BrainStormEra_WPF.Learner
 {
     /// <summary>
-    /// Interaction logic for CourseIntructor.xaml
+    /// Interaction logic for ManagementLessonLearner.xaml
     /// </summary>
-    public partial class CourseIntructor : Page
+    public partial class ManagementLessonLearner : Page
     {
-        public CourseIntructor(string userId)
+        public ManagementLessonLearner(string chapterId)
         {
             InitializeComponent();
-            DataContext = new CourseViewModel(userId);
-
+            DataContext = new LessonViewModel(chapterId);
         }
-
-
-
-
     }
 }

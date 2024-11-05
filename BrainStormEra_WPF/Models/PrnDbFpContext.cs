@@ -37,7 +37,7 @@ public partial class PrnDbFpContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-9CBUJ8HG;Initial Catalog=PRN_DB_FP;User ID=sa;Password=Khang02022004;Trust Server Certificate=True");
+        => optionsBuilder.UseSqlServer("Data Source=LTP;Initial Catalog=PRN_DB;User ID=sa;Password=01654460072ltp;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -152,10 +152,7 @@ public partial class PrnDbFpContext : DbContext
             entity.Property(e => e.CourseName)
                 .HasMaxLength(255)
                 .HasColumnName("course_name");
-            entity.Property(e => e.CoursePicture)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("course_picture");
+            entity.Property(e => e.CoursePicture).HasColumnName("course_picture");
             entity.Property(e => e.CourseStatus).HasColumnName("course_status");
             entity.Property(e => e.CreatedBy)
                 .HasMaxLength(255)

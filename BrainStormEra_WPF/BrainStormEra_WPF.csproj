@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="img\BrainStormEra_logo.png" />
     <None Remove="img\logo_BrainStormEra.png" />
+    <None Remove="img\user-img\coursenull.jpg" />
     <None Remove="img\user-img\default_user.png" />
   </ItemGroup>
 
@@ -29,6 +30,7 @@
 
   <ItemGroup>
     <Resource Include="img\logo_BrainStormEra.png" />
+    <Resource Include="img\user-img\coursenull.jpg" />
     <Resource Include="img\user-img\default_user.png" />
   </ItemGroup>
 

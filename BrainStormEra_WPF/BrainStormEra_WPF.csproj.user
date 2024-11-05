@@ -8,12 +8,36 @@
     <Compile Update="Instructor\CourseIntructor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Learner\ChapterLearner.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Learner\CourseLearner.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Learner\ManagementLessonLearner.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Common\Feedback\ViewFeedback.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Instructor\ChapterInstructor.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Instructor\CourseIntructor.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Instructor\ManagementLesson.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Learner\ChapterLearner.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Learner\CourseLearner.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Learner\ManagementLessonLearner.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

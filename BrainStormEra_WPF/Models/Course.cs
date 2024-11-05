@@ -13,13 +13,13 @@ public partial class Course
 
     public int? CourseStatus { get; set; }
 
-    public string? CoursePicture { get; set; }
-
     public decimal Price { get; set; }
 
     public DateTime CourseCreatedAt { get; set; }
 
     public string? CreatedBy { get; set; }
+
+    public byte[]? CoursePicture { get; set; }
 
     public virtual ICollection<Chapter> Chapters { get; set; } = new List<Chapter>();
 

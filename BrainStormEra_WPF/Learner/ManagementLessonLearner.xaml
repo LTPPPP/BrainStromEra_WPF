@@ -1,0 +1,106 @@
+﻿<Page x:Class="BrainStormEra_WPF.Learner.ManagementLessonLearner"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BrainStormEra_WPF.Learner"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ManagementLessonLearner">
+
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Page.Resources>
+
+    <Grid Background="#F0F0F0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="308"/>
+            <RowDefinition Height="Auto" MinHeight="137.243"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Lesson Details Section -->
+        <GroupBox Header="Lesson Details" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,15">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Labels and Input Fields -->
+                <!-- Removed Lesson ID Row -->
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Lesson Name:" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+                <TextBox Name="txbLessonName"  IsReadOnly="True" Text="{Binding NewItem.LessonName, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="10,5"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Description:" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+                <TextBox Name="txbLessonDescription" IsReadOnly="True" Text="{Binding NewItem.LessonDescription, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="10,5" Height="60" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+
+                <!-- Lesson Type Selection -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Lesson Type:" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" Margin="10,5" IsReadOnly="True" 
+                       ItemsSource="{Binding LessonTypeList}" 
+                       SelectedValue="{Binding NewItem.LessonTypeId, Mode=TwoWay}" 
+                       DisplayMemberPath="LessonTypeName" 
+                       SelectedValuePath="LessonTypeId" />
+
+
+
+
+
+
+
+
+                <!-- Action Buttons Aligned with Input Fields -->
+                <StackPanel Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,-10,0" Grid.RowSpan="3">
+
+                    <Button Name="btnClearForm" Command="{Binding ClearCommand}" Content="CLEAR" Width="80" Height="30" Margin="5" Background="#2196F3" Foreground="White" FontWeight="Bold"/>
+                </StackPanel>
+
+            </Grid>
+        </GroupBox>
+
+        <!-- ListView for Displaying Lessons -->
+        <GroupBox Header="Lessons List" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,255,0,0" Padding="10" Grid.Row="0" Grid.RowSpan="3">
+            <ListView Name="LessonListView"
+                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                   ItemsSource="{Binding LessonList}"
+                   Margin="-16,0,-9,0"
+                   BorderBrush="#D3D3D3"
+                   BorderThickness="1">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Lesson ID" DisplayMemberBinding="{Binding LessonId}" Width="100"/>
+                        <GridViewColumn Header="Lesson Name" DisplayMemberBinding="{Binding LessonName}" Width="150"/>
+                        <GridViewColumn Header="Description" DisplayMemberBinding="{Binding LessonDescription}" Width="200"/>
+                        <GridViewColumn Header="Order" DisplayMemberBinding="{Binding LessonOrder}" Width="100"/>
+
+                        <GridViewColumn Header="Lesson Type" DisplayMemberBinding="{Binding LessonType.LessonTypeName}" Width="150"/>
+                        <GridViewColumn Header="Lesson Content" DisplayMemberBinding="{Binding LessonContent}" Width="200"/>
+                        <GridViewColumn Header="Actions" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Open File" Command="{Binding DataContext.OpenFileCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding LessonContent}" Width="80" Height="25"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+    </Grid>
+</Page>

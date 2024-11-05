@@ -1,4 +1,4 @@
-﻿<Page x:Class="BrainStormEra_WPF.Profile"
+﻿<Window  x:Class="BrainStormEra_WPF.Profile"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,7 +6,7 @@
       mc:Ignorable="d"
       Title="Edit Profile" Height="600" Width="800">
 
-    <Page.Resources>
+    <Window.Resources>
         <Style x:Key="LabelStyle" TargetType="Label">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Medium"/>
@@ -31,7 +31,7 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
         </Style>
-    </Page.Resources>
+    </Window.Resources>
 
     <Border Background="White" CornerRadius="8" Margin="20">
         <Border.Effect>
@@ -45,7 +45,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Cột trái - Ảnh profile -->
+                <!-- Left Column - Profile Image -->
                 <StackPanel Grid.Column="0" Margin="0,0,30,0">
                     <Border Width="250" Height="250" 
                             BorderBrush="#bdc3c7" 
@@ -54,28 +54,29 @@
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.2"/>
                         </Border.Effect>
-                        
+
                         <Grid>
                             <Ellipse>
                                 <Ellipse.Fill>
-                                    <ImageBrush x:Name="ProfileImage" Stretch="UniformToFill"/>
+                                    <ImageBrush x:Name="ProfileImage" Stretch="UniformToFill" ImageSource="{Binding UserPicture, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
-                            
-                            <!-- Placeholder khi chưa có ảnh -->
-                            <TextBlock Text="No Image"
+
+                            <!-- Placeholder text when no image -->
+                            <TextBlock 
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center"
                                      Foreground="#95a5a6"/>
                         </Grid>
                     </Border>
-                    
+
                     <Button Content="Change Picture" 
                             Style="{StaticResource ButtonStyle}"
+                            Command="{Binding ChangePictureCommand}"
                             Margin="0,20,0,0"/>
                 </StackPanel>
 
-                <!-- Cột phải - Thông tin profile -->
+                <!-- Right Column - Profile Information -->
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -86,74 +87,49 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="130"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
                     <!-- Full Name -->
-                    <Label Grid.Row="0" Grid.Column="0" 
-                           Content="Full Name" 
-                           Style="{StaticResource LabelStyle}"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" 
-                            Style="{StaticResource TextBoxStyle}"/>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Full Name" Style="{StaticResource LabelStyle}"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FullName, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"/>
 
                     <!-- Date of Birth -->
-                    <Label Grid.Row="1" Grid.Column="0" 
-                           Content="Date of Birth" 
-                           Style="{StaticResource LabelStyle}"/>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Date of Birth" Style="{StaticResource LabelStyle}"/>
                     <DatePicker Grid.Row="1" Grid.Column="1" 
-                               Height="35" Margin="0,5"
-                               Padding="10,5"
-                               VerticalContentAlignment="Center"/>
+            SelectedDate="{Binding DateOfBirthDateTime, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
+            Height="35" Margin="0,5" Padding="10,5" 
+            VerticalContentAlignment="Center"/>
+
 
                     <!-- Gender -->
-                    <Label Grid.Row="2" Grid.Column="0" 
-                           Content="Gender" 
-                           Style="{StaticResource LabelStyle}"/>
-                    <ComboBox Grid.Row="2" Grid.Column="1" 
-                             Height="35" Margin="0,5"
-                             Padding="10,5"
-                             VerticalContentAlignment="Center">
-                        <ComboBoxItem Content="Male"/>
-                        <ComboBoxItem Content="Female"/>
-                        <ComboBoxItem Content="Other"/>
-                    </ComboBox>
+                    <Label Grid.Row="2" Grid.Column="0" Content="Gender" Style="{StaticResource LabelStyle}"/>
+                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                        <CheckBox Content="Male" IsChecked="{Binding IsMale, Mode=TwoWay}" Margin="0,5" VerticalAlignment="Center"/>
+                        <CheckBox Content="Female" IsChecked="{Binding IsFemale, Mode=TwoWay}" Margin="10,5" VerticalAlignment="Center"/>
+                        <CheckBox Content="Other" IsChecked="{Binding IsOther, Mode=TwoWay}" Margin="10,5" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+
 
                     <!-- Phone Number -->
-                    <Label Grid.Row="3" Grid.Column="0" 
-                           Content="Phone Number" 
-                           Style="{StaticResource LabelStyle}"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" 
-                            Style="{StaticResource TextBoxStyle}"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="Phone Number" Style="{StaticResource LabelStyle}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding PhoneNumber, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"/>
 
                     <!-- Address -->
-                    <Label Grid.Row="4" Grid.Column="0" 
-                           Content="Address" 
-                           Style="{StaticResource LabelStyle}"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" 
-                            Style="{StaticResource TextBoxStyle}"
-                            Height="100"
-                            TextWrapping="Wrap" 
-                            AcceptsReturn="True"
-                            VerticalContentAlignment="Top"
-                            Padding="10"/>
+                    <Label Grid.Row="4" Grid.Column="0" Content="Address" Style="{StaticResource LabelStyle}"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding UserAddress, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}" Height="100" TextWrapping="Wrap" AcceptsReturn="True" VerticalContentAlignment="Top" Padding="10"/>
 
                     <!-- Buttons -->
-                    <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" 
-                              Orientation="Horizontal" 
-                              HorizontalAlignment="Right" 
-                              Margin="0,30,0,0">
-                        <Button Content="Save Changes" 
-                                Style="{StaticResource ButtonStyle}"
-                                Margin="0,0,10,0"/>
-                        <Button Content="Cancel" 
-                                Style="{StaticResource ButtonStyle}"
-                                Background="#95a5a6"/>
+                    <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
+                        <Button Content="Save Changes" Style="{StaticResource ButtonStyle}" Command="{Binding SaveCommand}" Margin="0,0,10,0"/>
+                        <Button Content="Cancel" Style="{StaticResource ButtonStyle}" Command="{Binding CancelCommand}" Background="#95a5a6"/>
                     </StackPanel>
                 </Grid>
             </Grid>
         </ScrollViewer>
     </Border>
-</Page>
+</Window >
