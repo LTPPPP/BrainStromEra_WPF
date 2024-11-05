@@ -22,7 +22,9 @@ namespace BrainStormEra_WPF.ViewModel.Account
         private string _gender;
         private string _phoneNumber;
         private string _userAddress;
-
+        private bool _isMale;
+        private bool _isFemale;
+        private bool _isOther;
         public string UserId
         {
             get => _userId;
@@ -69,7 +71,50 @@ namespace BrainStormEra_WPF.ViewModel.Account
                 OnPropertyChanged();
             }
         }
+        public bool IsMale
+        {
+            get => _isMale;
+            set
+            {
+                if (value)
+                {
+                    IsFemale = IsOther = false; // Uncheck others
+                    Gender = "male";
+                }
+                _isMale = value;
+                OnPropertyChanged();
+            }
+        }
 
+        public bool IsFemale
+        {
+            get => _isFemale;
+            set
+            {
+                if (value)
+                {
+                    IsMale = IsOther = false; // Uncheck others
+                    Gender = "female";
+                }
+                _isFemale = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsOther
+        {
+            get => _isOther;
+            set
+            {
+                if (value)
+                {
+                    IsMale = IsFemale = false; // Uncheck others
+                    Gender = "other";
+                }
+                _isOther = value;
+                OnPropertyChanged();
+            }
+        }
         public string PhoneNumber
         {
             get => _phoneNumber;
@@ -92,13 +137,21 @@ namespace BrainStormEra_WPF.ViewModel.Account
             _userId = account.UserId;
             FullName = account.FullName ?? string.Empty;
             DateOfBirth = account.DateOfBirth;
-            Gender = account.Gender switch
+            switch (account.Gender)
             {
-                "male" => "male",
-                "female" => "female",
-                "other" => "other",
-                _ => "other"
-            };
+                case "male":
+                    IsMale = true;
+                    break;
+                case "female":
+                    IsFemale = true;
+                    break;
+                case "other":
+                    IsOther = true;
+                    break;
+                default:
+                    IsOther = true; // default case
+                    break;
+            }
             PhoneNumber = account.PhoneNumber ?? string.Empty;
             UserAddress = account.UserAddress ?? string.Empty;
             SetUserPicture(account.UserPicture);
@@ -167,7 +220,7 @@ namespace BrainStormEra_WPF.ViewModel.Account
             {
                 var selectedImagePath = openFileDialog.FileName;
                 var image = new BitmapImage(new Uri(selectedImagePath));
-                UserPicture = image;
+                UserPicture = image; // This will automatically update the ImageBrush binding in the UI
 
                 using var memoryStream = new MemoryStream();
                 var encoder = new PngBitmapEncoder();
@@ -176,6 +229,7 @@ namespace BrainStormEra_WPF.ViewModel.Account
                 UserPictureBytes = memoryStream.ToArray();
             }
         }
+
 
         private void Cancel(object parameter)
         {

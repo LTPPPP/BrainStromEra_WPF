@@ -58,12 +58,12 @@
                         <Grid>
                             <Ellipse>
                                 <Ellipse.Fill>
-                                    <ImageBrush x:Name="ProfileImage" Stretch="UniformToFill" ImageSource="{Binding UserPicture}"/>
+                                    <ImageBrush x:Name="ProfileImage" Stretch="UniformToFill" ImageSource="{Binding UserPicture, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
 
                             <!-- Placeholder text when no image -->
-                            <TextBlock Text="No Image"
+                            <TextBlock 
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center"
                                      Foreground="#95a5a6"/>
@@ -106,18 +106,16 @@
 
 
                     <!-- Gender -->
-                    <Label Grid.Row="2" Grid.Column="0" Content="Gender" Style="{StaticResource LabelStyle}"/>
-                    <ComboBox Grid.Row="2" Grid.Column="1" 
-          SelectedValue="{Binding Gender, Mode=TwoWay}" 
-          Height="35" Margin="0,5" Padding="10,5" 
-          VerticalContentAlignment="Center">
-                        <ComboBoxItem Content="male" />
-                        <ComboBoxItem Content="female" />
-                        <ComboBoxItem Content="other" />
-                    </ComboBox>
+                        <Label Grid.Row="2" Grid.Column="0" Content="Gender" Style="{StaticResource LabelStyle}"/>
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                            <CheckBox Content="Male" IsChecked="{Binding IsMale, Mode=TwoWay}" Margin="0,5" VerticalAlignment="Center"/>
+                            <CheckBox Content="Female" IsChecked="{Binding IsFemale, Mode=TwoWay}" Margin="10,5" VerticalAlignment="Center"/>
+                            <CheckBox Content="Other" IsChecked="{Binding IsOther, Mode=TwoWay}" Margin="10,5" VerticalAlignment="Center"/>
+                        </StackPanel>
 
 
-                    <!-- Phone Number -->
+
+                        <!-- Phone Number -->
                     <Label Grid.Row="3" Grid.Column="0" Content="Phone Number" Style="{StaticResource LabelStyle}"/>
                     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding PhoneNumber, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"/>
 

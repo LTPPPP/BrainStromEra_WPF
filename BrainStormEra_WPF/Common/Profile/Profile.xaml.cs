@@ -18,7 +18,6 @@ namespace BrainStormEra_WPF
         {
             InitializeComponent();
             DataContext = accountViewModel;
-            Console.WriteLine(DataContext);
             // Load profile image from ViewModel
             if (accountViewModel.UserPicture != null)
             {
