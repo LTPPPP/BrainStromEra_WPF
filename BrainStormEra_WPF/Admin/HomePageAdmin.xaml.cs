@@ -34,7 +34,10 @@ namespace BrainStormEra_WPF
         }
         private void UserPicture_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MainFrame.Navigate(new Profile(_accountViewModel));
+            // Open the profile edit window when the user clicks on their profile picture
+            var editWindow = new Profile(_accountViewModel); // Pass the current AccountViewModel
+            editWindow.Owner = this;  // Optional: Set the owner for modal behavior
+            editWindow.ShowDialog();
         }
 
 

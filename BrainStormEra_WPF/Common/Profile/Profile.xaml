@@ -1,4 +1,4 @@
-﻿<Page x:Class="BrainStormEra_WPF.Profile"
+﻿<Window  x:Class="BrainStormEra_WPF.Profile"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,7 +6,7 @@
       mc:Ignorable="d"
       Title="Edit Profile" Height="600" Width="800">
 
-    <Page.Resources>
+    <Window.Resources>
         <Style x:Key="LabelStyle" TargetType="Label">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Medium"/>
@@ -31,7 +31,7 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
         </Style>
-    </Page.Resources>
+    </Window.Resources>
 
     <Border Background="White" CornerRadius="8" Margin="20">
         <Border.Effect>
@@ -100,7 +100,7 @@
                     <!-- Date of Birth -->
                     <Label Grid.Row="1" Grid.Column="0" Content="Date of Birth" Style="{StaticResource LabelStyle}"/>
                     <DatePicker Grid.Row="1" Grid.Column="1" 
-            SelectedDate="{Binding DateOfBirth, Mode=TwoWay, TargetNullValue=''}"
+            SelectedDate="{Binding DateOfBirthDateTime, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
             Height="35" Margin="0,5" Padding="10,5" 
             VerticalContentAlignment="Center"/>
 
@@ -134,4 +134,4 @@
             </Grid>
         </ScrollViewer>
     </Border>
-</Page>
+</Window >

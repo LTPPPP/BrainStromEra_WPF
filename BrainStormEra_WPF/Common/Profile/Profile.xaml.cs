@@ -10,20 +10,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BrainStormEra_WPF
 {
-    public partial class Profile : Page
+    public partial class Profile : Window
     {
         private readonly AccountViewModel _accountViewModel;
 
         public Profile(AccountViewModel accountViewModel)
         {
             InitializeComponent();
-            _accountViewModel = accountViewModel;
-            DataContext = _accountViewModel;
-
+            DataContext = accountViewModel;
+            Console.WriteLine(DataContext);
             // Load profile image from ViewModel
-            if (_accountViewModel.UserPicture != null)
+            if (accountViewModel.UserPicture != null)
             {
-                ProfileImage.ImageSource = _accountViewModel.UserPicture;
+                ProfileImage.ImageSource = accountViewModel.UserPicture;
             }
         }
 
@@ -65,7 +64,7 @@ namespace BrainStormEra_WPF
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.GoBack();
+            this.Close();
         }
 
         private void UpdateAccount()

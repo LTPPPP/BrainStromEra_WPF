@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BrainStormEra_WPF")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+edc8ae0a441f7b133b7b62eaada5af198f4d7ea0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8fcdb2cc1690907ae35cfe369c23b31c2b2e3613")]
 [assembly: System.Reflection.AssemblyProductAttribute("BrainStormEra_WPF")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BrainStormEra_WPF")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

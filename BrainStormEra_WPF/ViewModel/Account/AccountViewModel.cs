@@ -1,10 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using BrainStormEra_WPF.Models;
-using BrainStormEra_WPF.Utilities;
 using Microsoft.Win32;
+using Microsoft.EntityFrameworkCore;
+using BrainStormEra_WPF.Utilities;
+using System.Windows;
 
 namespace BrainStormEra_WPF.ViewModel.Account
 {
@@ -43,24 +46,26 @@ namespace BrainStormEra_WPF.ViewModel.Account
         public DateOnly? DateOfBirth
         {
             get => _dateOfBirth;
-            set { _dateOfBirth = value; OnPropertyChanged(); }
+            set { _dateOfBirth = value; OnPropertyChanged(); OnPropertyChanged(nameof(DateOfBirthDateTime)); }
         }
+
+        public DateTime? DateOfBirthDateTime
+        {
+            get => DateOfBirth.HasValue ? DateOfBirth.Value.ToDateTime(new TimeOnly(0, 0)) : (DateTime?)null;
+            set
+            {
+                DateOfBirth = value.HasValue ? DateOnly.FromDateTime(value.Value) : null;
+                OnPropertyChanged();
+            }
+        }
+
 
         public string Gender
         {
             get => _gender;
             set
             {
-                // Ensure the value conforms to database constraints
-                if (value == "male" || value == "female" || value == "other")
-                {
-                    _gender = value;
-                }
-                else
-                {
-                    // Fallback to "other" if an invalid value is assigned
-                    _gender = "other";
-                }
+                _gender = value == "male" || value == "female" || value == "other" ? value : "other";
                 OnPropertyChanged();
             }
         }
@@ -87,21 +92,18 @@ namespace BrainStormEra_WPF.ViewModel.Account
             _userId = account.UserId;
             FullName = account.FullName ?? string.Empty;
             DateOfBirth = account.DateOfBirth;
-
-            // Initialize Gender with a valid value
             Gender = account.Gender switch
             {
                 "male" => "male",
                 "female" => "female",
                 "other" => "other",
-                _ => "other" // Default to "other" if no valid gender is provided
+                _ => "other"
             };
-
             PhoneNumber = account.PhoneNumber ?? string.Empty;
             UserAddress = account.UserAddress ?? string.Empty;
             SetUserPicture(account.UserPicture);
 
-            SaveCommand = new RelayCommand(SaveChanges);
+            SaveCommand = new RelayCommand(async param => await SaveChangesAsync());
             ChangePictureCommand = new RelayCommand(ChangePicture);
             CancelCommand = new RelayCommand(Cancel);
         }
@@ -120,26 +122,36 @@ namespace BrainStormEra_WPF.ViewModel.Account
             }
             else
             {
-                // Load default user picture
                 UserPicture = new BitmapImage(new Uri("pack://application:,,,/BrainStormEra_WPF;component/img/user-img/default_user.png"));
             }
             UserPictureBytes = pictureBytes;
         }
 
-        private void SaveChanges(object parameter)
+        private async Task SaveChangesAsync()
         {
-            using var context = new PrnDbFpContext();
-            var existingAccount = context.Accounts.Find(UserId);
-            if (existingAccount != null)
+            try
             {
-                existingAccount.FullName = FullName;
-                existingAccount.DateOfBirth = DateOfBirth;
-                existingAccount.Gender = Gender;
-                existingAccount.PhoneNumber = PhoneNumber;
-                existingAccount.UserAddress = UserAddress;
-                existingAccount.UserPicture = UserPictureBytes;
+                using var context = new PrnDbFpContext();
+                var existingAccount = await context.Accounts.FindAsync(UserId);
 
-                context.SaveChanges();
+                if (existingAccount != null)
+                {
+                    existingAccount.FullName = FullName;
+                    existingAccount.DateOfBirth = DateOfBirth;
+                    existingAccount.Gender = Gender;
+                    existingAccount.PhoneNumber = PhoneNumber;
+                    existingAccount.UserAddress = UserAddress;
+                    existingAccount.UserPicture = UserPictureBytes;
+
+                    context.Entry(existingAccount).State = EntityState.Modified;
+                    await context.SaveChangesAsync();
+
+                    MessageBox.Show("Profile updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -167,10 +179,9 @@ namespace BrainStormEra_WPF.ViewModel.Account
 
         private void Cancel(object parameter)
         {
-            // Restore data from _originalAccount
             FullName = _originalAccount.FullName;
             DateOfBirth = _originalAccount.DateOfBirth;
-            Gender = _originalAccount.Gender ?? "other"; // Default to "other" if null
+            Gender = _originalAccount.Gender ?? "other";
             PhoneNumber = _originalAccount.PhoneNumber;
             UserAddress = _originalAccount.UserAddress;
             SetUserPicture(_originalAccount.UserPicture);
